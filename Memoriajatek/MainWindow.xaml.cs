@@ -34,7 +34,7 @@ namespace Memoriajatek
             string jatek = lbox_games.SelectedItem as string;
 
             score = 0;
-            tb_Score.Text = "Score: 0";
+            tb_Score.Text = "Próbálkozás: 0";
             if (meret != null && jatek != null)
             {
                 string grid_szam = meret.Substring(2);
@@ -116,7 +116,7 @@ namespace Memoriajatek
                 button.Foreground = Brushes.LightGreen;
                 elozo.Foreground = Brushes.LightGreen;
                 score++;
-                tb_Score.Text = "Score: " + score;
+                tb_Score.Text = "Próbálkozás: " + score;
             }
             else
             {
@@ -126,6 +126,8 @@ namespace Memoriajatek
                 elozo.Content = "?";
                 button.Background = Brushes.LightGray;
                 elozo.Background = Brushes.LightGray;
+                score++;
+                tb_Score.Text = "Próbálkozás: " + score;
             }
 
         }
