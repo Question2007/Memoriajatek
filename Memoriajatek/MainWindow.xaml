@@ -8,20 +8,20 @@
         Title="MainWindow" Height="450" Width="800">
 
     <Grid Margin="15">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto"/>
-        </Grid.ColumnDefinitions>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
 
-        <Grid Grid.Row="0">
-            <ListBox x:Name="lbox_meret" Margin="0,0,376,152"/>
-        <ListBox x:Name="lbox_games" Margin="0,86,376,66"/>
-        <Button x:Name="btn_start" Content="Start" Click="btn_start_Click" Margin="157,159,533,21" RenderTransformOrigin="-0.757,1.676"/>
+        <ListBox x:Name="lbox_meret" Margin="0,0,447,152"/>
+        <ListBox x:Name="lbox_games" Margin="393,0,23,152"/>
+        <Button x:Name="btn_start"  Content="Start" Click="btn_start_Click" Margin="326,90,364,90" RenderTransformOrigin="-0.757,1.676"/>
+
+
+        <Grid Grid.Row="1" x:Name="GameGrid">
+            
         </Grid>
     </Grid>
 </Window>

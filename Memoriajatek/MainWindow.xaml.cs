@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection.Emit;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,8 +17,9 @@ namespace Memoriajatek
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<string> meretek = new List<string>() {"2x2", "4x4", "6x6"};
+        List<string> meretek = new List<string>() { "2x2", "4x4", "6x6" };
         List<string> jatekok = new List<string>() { "Számok", "Smile-K", "Országok és Fővárosaik" };
+
         public MainWindow()
         {
             InitializeComponent();
@@ -32,12 +34,85 @@ namespace Memoriajatek
 
             if (meret != null && jatek != null)
             {
+                string grid_szam = meret.Substring(2);
+                Grid_Elhelyezese(int.Parse(grid_szam));
 
             }
             else
             {
                 MessageBox.Show("Kérlek válassz egy játékot és egy méretet!");
             }
+        }
+
+
+        private void Grid_Elhelyezese(int meret)
+        {
+            for (int i = 0; i < meret; i++)
+            {
+                GameGrid.RowDefinitions.Add(new RowDefinition());
+                GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            List<int> szamok = new List<int>();
+            for (int i = 1; i <= meret * meret / 2; i++)
+            {
+                szamok.Add(i);
+                szamok.Add(i);
+            }
+            szamok = szamok.Shuffle().ToList();
+            int index = 0;
+            for (int i = 0; i < meret; i++)
+            {
+                for (int j = 0; j < meret; j++)
+                {
+
+
+                    Button btn = new Button
+                    {
+                        Name = "btn_"+szamok[index++].ToString(),
+                        Content = "?",
+                        FontSize = 20,
+                        FontWeight = FontWeights.Bold,
+                        Margin = new Thickness(3)
+                    };
+
+                    btn.Click += Button_Click;
+
+                    Grid.SetRow(btn, i);
+                    Grid.SetColumn(btn, j);
+
+                    GameGrid.Children.Add(btn);
+                }
+            }
+        }
+        string elozo_btn = null;
+        Button elozo = null;    
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+            button.Content = button.Name.Split("_")[1];
+            string felirat = button.Content.ToString();
+
+            if (elozo_btn == null) {
+                elozo_btn = felirat;
+                elozo = button;
+            }
+            else if (elozo_btn == felirat)
+            {
+                MessageBox.Show("Talált páros!");
+                elozo_btn = null;
+                button.IsEnabled = false;
+                elozo.IsEnabled = false;
+                button.Foreground = Brushes.LightGreen;
+                elozo.Foreground = Brushes.LightGreen;
+            }
+            else
+            {
+                MessageBox.Show("Nem talált páros!");
+                elozo_btn = null;
+                button.Content = "?";
+                elozo.Content = "?";
+            }
+
         }
     }
 }
