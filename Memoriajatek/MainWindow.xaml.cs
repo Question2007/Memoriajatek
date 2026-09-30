@@ -80,7 +80,8 @@ namespace Memoriajatek
                         Content = "?",
                         FontSize = 20,
                         FontWeight = FontWeights.Bold,
-                        Margin = new Thickness(3)
+                        Margin = new Thickness(3),
+                        Background = Brushes.LightGray
                     };
 
                     btn.Click += Button_Click;
