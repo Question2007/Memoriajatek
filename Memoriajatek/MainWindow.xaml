@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-    <Grid Margin="15">
+    <Grid x:Name="GridMain" Margin="15">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
@@ -18,7 +18,7 @@
         <ListBox x:Name="lbox_meret" Margin="0,0,447,152"/>
         <ListBox x:Name="lbox_games" Margin="393,0,23,152"/>
         <Button x:Name="btn_start"  Content="Start" Click="btn_start_Click" Margin="326,90,364,90" RenderTransformOrigin="-0.757,1.676"/>
-
+        <TextBlock x:Name="tb_Score" Text="" FontSize="16" FontWeight="Bold" Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,169,0,0"/>
 
         <Grid Grid.Row="1" x:Name="GameGrid">
             

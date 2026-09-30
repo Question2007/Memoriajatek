@@ -20,6 +20,7 @@ namespace Memoriajatek
         List<string> meretek = new List<string>() { "2x2", "4x4", "6x6" };
         List<string> jatekok = new List<string>() { "Számok", "Smile-K", "Országok és Fővárosaik" };
 
+        int score;
         public MainWindow()
         {
             InitializeComponent();
@@ -32,6 +33,8 @@ namespace Memoriajatek
             string meret = lbox_meret.SelectedItem as string;
             string jatek = lbox_games.SelectedItem as string;
 
+            score = 0;
+            tb_Score.Text = "Score: 0";
             if (meret != null && jatek != null)
             {
                 string grid_szam = meret.Substring(2);
@@ -47,11 +50,16 @@ namespace Memoriajatek
 
         private void Grid_Elhelyezese(int meret)
         {
+            
+            GameGrid.RowDefinitions.Clear();
+            GameGrid.ColumnDefinitions.Clear();
+
             for (int i = 0; i < meret; i++)
             {
                 GameGrid.RowDefinitions.Add(new RowDefinition());
                 GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
+
             List<int> szamok = new List<int>();
             for (int i = 1; i <= meret * meret / 2; i++)
             {
@@ -88,6 +96,7 @@ namespace Memoriajatek
         Button elozo = null;    
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
             Button button = (Button)sender;
             button.Content = button.Name.Split("_")[1];
             string felirat = button.Content.ToString();
@@ -104,6 +113,8 @@ namespace Memoriajatek
                 elozo.IsEnabled = false;
                 button.Foreground = Brushes.LightGreen;
                 elozo.Foreground = Brushes.LightGreen;
+                score++;
+                tb_Score.Text = "Score: " + score;
             }
             else
             {
