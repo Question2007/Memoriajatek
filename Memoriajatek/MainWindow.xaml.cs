@@ -104,6 +104,8 @@ namespace Memoriajatek
             if (elozo_btn == null) {
                 elozo_btn = felirat;
                 elozo = button;
+                button.Background = Brushes.LightBlue;
+                elozo.Background = Brushes.LightBlue;
             }
             else if (elozo_btn == felirat)
             {
@@ -122,6 +124,8 @@ namespace Memoriajatek
                 elozo_btn = null;
                 button.Content = "?";
                 elozo.Content = "?";
+                button.Background = Brushes.LightGray;
+                elozo.Background = Brushes.LightGray;
             }
 
         }
