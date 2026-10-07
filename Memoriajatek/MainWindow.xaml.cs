@@ -38,7 +38,7 @@ namespace Memoriajatek
             if (meret != null && jatek != null)
             {
                 string grid_szam = meret.Substring(2);
-                Grid_Elhelyezese(int.Parse(grid_szam));
+                Grid_Elhelyezese(int.Parse(grid_szam), jatek);
 
             }
             else
@@ -48,7 +48,7 @@ namespace Memoriajatek
         }
 
 
-        private void Grid_Elhelyezese(int meret)
+        private void Grid_Elhelyezese(int meret, string jatek)
         {
             
             GameGrid.RowDefinitions.Clear();
@@ -60,46 +60,106 @@ namespace Memoriajatek
                 GameGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
 
-            List<int> szamok = new List<int>();
-            for (int i = 1; i <= meret * meret / 2; i++)
+            Jatek_Valasztas(jatek, meret);
+        }
+
+
+        private void Jatek_Valasztas(string jatek, int meret)
+        {
+
+            if (jatek == "Számok")
             {
-                szamok.Add(i);
-                szamok.Add(i);
-            }
-            szamok = szamok.Shuffle().ToList();
-            int index = 0;
-            for (int i = 0; i < meret; i++)
-            {
-                for (int j = 0; j < meret; j++)
+                List<int> szamok = new List<int>();
+                for (int i = 1; i <= meret * meret / 2; i++)
                 {
-
-
-                    Button btn = new Button
-                    {
-                        Name = "btn_"+szamok[index++].ToString(),
-                        Content = "?",
-                        FontSize = 20,
-                        FontWeight = FontWeights.Bold,
-                        Margin = new Thickness(3),
-                        Background = Brushes.LightGray
-                    };
-
-                    btn.Click += Button_Click;
-
-                    Grid.SetRow(btn, i);
-                    Grid.SetColumn(btn, j);
-
-                    GameGrid.Children.Add(btn);
+                    szamok.Add(i);
+                    szamok.Add(i);
                 }
+                szamok = szamok.Shuffle().ToList();
+                int index = 0;
+                for (int i = 0; i < meret; i++)
+                {
+                    for (int j = 0; j < meret; j++)
+                    {
+
+
+                        Button btn = new Button
+                        {
+                            Name = "btn_" + szamok[index++].ToString(),
+                            Content = "?",
+                            FontSize = 20,
+                            FontWeight = FontWeights.Bold,
+                            Margin = new Thickness(3),
+                            Background = Brushes.LightGray,
+                            DataContext = null
+                        };
+
+                        btn.Click += Button_Click;
+
+                        Grid.SetRow(btn, i);
+                        Grid.SetColumn(btn, j);
+
+                        GameGrid.Children.Add(btn);
+                    }
+                }
+
             }
+            else if (jatek == "Smile-K")
+            {
+                List<string> emojik = new List<string>() { "😀", "😶‍🌫️", "😄", "😁", "😆", "😅", "😂", "🤣", "😍", "😱", "💀", "👽", "🤖", "👾", "💩", "🥸", "🤬", "😎"  };
+                List<string> smilek = new List<string>() {};
+
+                for (int i = 1; i <= meret * meret / 2; i++)
+                {
+                    smilek.Add(emojik[i]);
+                    smilek.Add(emojik[i]);
+                }
+                smilek = smilek.Shuffle().ToList();
+                int index = 0;
+                for (int i = 0; i < meret; i++)
+                {
+                    for (int j = 0; j < meret; j++)
+                    {
+
+
+                        Button btn = new Button
+                        {
+                            //Name = "btn_" + index++,
+                            Content = "?",
+                            FontSize = 20,
+                            FontWeight = FontWeights.Bold,
+                            Margin = new Thickness(3),
+                            Background = Brushes.LightGray,
+                            DataContext = smilek[index++]
+                        };
+
+                        btn.Click += Button_Click;
+
+                        Grid.SetRow(btn, i);
+                        Grid.SetColumn(btn, j);
+
+                        GameGrid.Children.Add(btn);
+                    }
+                }
+
+            }
+
         }
         string elozo_btn = null;
         Button elozo = null;    
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             Button button = (Button)sender;
-            button.Content = button.Name.Split("_")[1];
+            if (button.DataContext == null)
+            {
+                button.Content = button.Name.Split("_")[1];
+            }
+            else
+            {
+                button.Content = button.DataContext.ToString();
+            }
+            //button.Content = button.Name.Split("_")[1];
+            //button.Content = button.DataContext.ToString();
             string felirat = button.Content.ToString();
 
             if (elozo_btn == null) {
