@@ -112,8 +112,19 @@ namespace Memoriajatek
                             FontSize = 20,
                             FontWeight = FontWeights.Bold,
                             Margin = new Thickness(3),
-                            Background = Brushes.LightGray,
-                            DataContext = null
+                            Foreground = Brushes.White,
+                            DataContext = null,
+                            Background = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0.5, 0),
+                                EndPoint = new Point(0.5, 1),
+                                GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                            }
+
                         };
 
                         btn.Click += Button_Click;
@@ -151,8 +162,18 @@ namespace Memoriajatek
                             FontSize = 20,
                             FontWeight = FontWeights.Bold,
                             Margin = new Thickness(3),
-                            Background = Brushes.LightGray,
-                            DataContext = Cc[index++].ToString()
+                            DataContext = Cc[index++].ToString(),
+                            Foreground = Brushes.White,
+                            Background = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0.5, 0),
+                                EndPoint = new Point(0.5, 1),
+                                GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                            }
                         };
 
                         btn.Click += Button_Click;
@@ -190,8 +211,18 @@ namespace Memoriajatek
                             FontSize = 20,
                             FontWeight = FontWeights.Bold,
                             Margin = new Thickness(3),
-                            Background = Brushes.LightGray,
-                            DataContext = smilek[index++]
+                            DataContext = smilek[index++],
+                            Foreground = Brushes.White,
+                            Background = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0.5, 0),
+                                EndPoint = new Point(0.5, 1),
+                                GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                            }
                         };
 
                         btn.Click += Button_Click;
@@ -224,13 +255,16 @@ namespace Memoriajatek
                 //button.Content = button.Name.Split("_")[1];
                 //button.Content = button.DataContext.ToString();
                 string felirat = button.Content.ToString();
-
+                if (button != null)
+                {
+                    button.Background = Brushes.LightPink;
+                }
                 if (elozo_btn == null)
                 {
                     elozo_btn = felirat;
                     elozo = button;
-                    button.Background = Brushes.LightBlue;
-                    elozo.Background = Brushes.LightBlue;
+                    button.Background = Brushes.LightPink;
+                    elozo.Background = Brushes.LightPink;
                 }
                 else
                 {
@@ -244,6 +278,8 @@ namespace Memoriajatek
                         elozo.IsEnabled = false;
                         button.Foreground = Brushes.LightGreen;
                         elozo.Foreground = Brushes.LightGreen;
+                        button.Background = Brushes.LightPink;
+                        elozo.Background = Brushes.LightPink;
                         score++;
                         tb_Score.Text = "Próbálkozás: " + score;
                     }
@@ -253,8 +289,26 @@ namespace Memoriajatek
                         elozo_btn = null;
                         button.Content = "?";
                         elozo.Content = "?";
-                        button.Background = Brushes.LightGray;
-                        elozo.Background = Brushes.LightGray;
+                        button.Background = Background = new LinearGradientBrush
+                        {
+                            StartPoint = new Point(0.5, 0),
+                            EndPoint = new Point(0.5, 1),
+                            GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                        };
+                        elozo.Background = Background = new LinearGradientBrush
+                        {
+                            StartPoint = new Point(0.5, 0),
+                            EndPoint = new Point(0.5, 1),
+                            GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                        };
                         score++;
                         tb_Score.Text = "Próbálkozás: " + score;
                     }
@@ -274,13 +328,16 @@ namespace Memoriajatek
                 //button.Content = button.Name.Split("_")[1];
                 //button.Content = button.DataContext.ToString();
                 string felirat = button.Content.ToString();
-
+                if (button != null)
+                {
+                    button.Background = Brushes.LightPink;
+                }
                 if (elozo_btn == null)
                 {
                     elozo_btn = felirat;
                     elozo = button;
-                    button.Background = Brushes.LightBlue;
-                    elozo.Background = Brushes.LightBlue;
+                    button.Background = Brushes.LightPink;
+                    elozo.Background = Brushes.LightPink;
                 }
                 else if (elozo_btn == felirat)
                 {
@@ -290,6 +347,8 @@ namespace Memoriajatek
                     elozo.IsEnabled = false;
                     button.Foreground = Brushes.LightGreen;
                     elozo.Foreground = Brushes.LightGreen;
+                    button.Background = Brushes.LightPink;
+                    elozo.Background = Brushes.LightPink;
                     score++;
                     tb_Score.Text = "Próbálkozás: " + score;
                 }
@@ -299,8 +358,26 @@ namespace Memoriajatek
                     elozo_btn = null;
                     button.Content = "?";
                     elozo.Content = "?";
-                    button.Background = Brushes.LightGray;
-                    elozo.Background = Brushes.LightGray;
+                    button.Background = Background = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(0.5, 0),
+                        EndPoint = new Point(0.5, 1),
+                        GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                    };
+                    elozo.Background = Background = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(0.5, 0),
+                        EndPoint = new Point(0.5, 1),
+                        GradientStops =
+                                {
+                                    new GradientStop(Color.FromArgb(255, 68, 35, 76), 0),
+                                    new GradientStop(Color.FromArgb(255, 201, 62, 234), 1)
+                                }
+                    };
                     score++;
                     tb_Score.Text = "Próbálkozás: " + score;
                 }
