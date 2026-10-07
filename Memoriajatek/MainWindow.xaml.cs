@@ -19,6 +19,28 @@ namespace Memoriajatek
     {
         List<string> meretek = new List<string>() { "2x2", "4x4", "6x6" };
         List<string> jatekok = new List<string>() { "Számok", "Smile-K", "Országok és Fővárosaik" };
+        Dictionary<string, string> OrszagVarosok = new Dictionary<string, string>()
+                {
+                    {"Magyarország","Budapest" },
+                    {"Németország","Berlin" },
+                    {"Franciaország","Párizs" },
+                    {"Olaszország","Róma" },
+                    {"Spanyolország","Madrid" },
+                    {"Portugália","Lisszabon" },
+                    {"Ausztria","Bécs" },
+                    {"Svájc","Bern" },
+                    {"Lengyelország","Varsó" },
+                    {"Csehország","Prága" },
+                    {"Szlovákia","Pozsony" },
+                    {"Románia","Bukarest" },
+                    {"UK","London" },
+                    {"USA","Washington D.C." },
+                    {"Kanada","Ottawa" },
+                    {"Japán","Tokió" },
+                    {"Ausztrália","Canberra" },
+                    {"Brazília","Brasília" },
+
+                };
 
         int score;
         public MainWindow()
@@ -104,10 +126,49 @@ namespace Memoriajatek
                 }
 
             }
+            else if (jatek == "Országok és Fővárosaik")
+            {
+                
+                List<string> Cc = new List<string>() { };
+
+                foreach (var item in OrszagVarosok.Take(meret*meret/2))
+                {
+                    Cc.Add(item.Key);
+                    Cc.Add(item.Value);
+                }
+                Cc = Cc.Shuffle().ToList();
+                int index = 0;
+                for (int i = 0; i < meret; i++)
+                {
+                    for (int j = 0; j < meret; j++)
+                    {
+
+
+                        Button btn = new Button
+                        {
+                            //Name = Cc[index++].ToString(),
+                            Content = "?",
+                            FontSize = 20,
+                            FontWeight = FontWeights.Bold,
+                            Margin = new Thickness(3),
+                            Background = Brushes.LightGray,
+                            DataContext = Cc[index++].ToString()
+                        };
+
+                        btn.Click += Button_Click;
+
+                        Grid.SetRow(btn, i);
+                        Grid.SetColumn(btn, j);
+
+                        GameGrid.Children.Add(btn);
+                    }
+                }
+
+            }
             else if (jatek == "Smile-K")
             {
-                List<string> emojik = new List<string>() { "😀", "😶‍🌫️", "😄", "😁", "😆", "😅", "😂", "🤣", "😍", "😱", "💀", "👽", "🤖", "👾", "💩", "🥸", "🤬", "😎"  };
-                List<string> smilek = new List<string>() {};
+                List<string> emojik = new List<string>() { "😀", "😶‍🌫️", "😄", "😁", "😆", "😅", "😂", "🤣", "😍", "😱", "💀", "👽", "🤖", "👾", "💩", "🥸", "🤬", "😎" };
+                List<string> smilek = new List<string>() { };
 
                 for (int i = 1; i <= meret * meret / 2; i++)
                 {
@@ -149,47 +210,102 @@ namespace Memoriajatek
         Button elozo = null;    
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
-            if (button.DataContext == null)
+            if (lbox_games.SelectedItem == "Országok és Fővárosaik")
             {
-                button.Content = button.Name.Split("_")[1];
-            }
-            else
-            {
-                button.Content = button.DataContext.ToString();
-            }
-            //button.Content = button.Name.Split("_")[1];
-            //button.Content = button.DataContext.ToString();
-            string felirat = button.Content.ToString();
+                Button button = (Button)sender;
+                if (button.DataContext == null)
+                {
+                    button.Content = button.Name.Split("_")[1];
+                }
+                else
+                {
+                    button.Content = button.DataContext.ToString();
+                }
+                //button.Content = button.Name.Split("_")[1];
+                //button.Content = button.DataContext.ToString();
+                string felirat = button.Content.ToString();
 
-            if (elozo_btn == null) {
-                elozo_btn = felirat;
-                elozo = button;
-                button.Background = Brushes.LightBlue;
-                elozo.Background = Brushes.LightBlue;
-            }
-            else if (elozo_btn == felirat)
-            {
-                MessageBox.Show("Talált páros!");
-                elozo_btn = null;
-                button.IsEnabled = false;
-                elozo.IsEnabled = false;
-                button.Foreground = Brushes.LightGreen;
-                elozo.Foreground = Brushes.LightGreen;
-                score++;
-                tb_Score.Text = "Próbálkozás: " + score;
+                if (elozo_btn == null)
+                {
+                    elozo_btn = felirat;
+                    elozo = button;
+                    button.Background = Brushes.LightBlue;
+                    elozo.Background = Brushes.LightBlue;
+                }
+                else
+                {
+                    bool talalat = 
+                        (OrszagVarosok.ContainsKey(elozo_btn) && OrszagVarosok[elozo_btn] == felirat || OrszagVarosok.ContainsKey(felirat) && OrszagVarosok[felirat] == elozo_btn);
+                    if (talalat)
+                    {
+                        MessageBox.Show("Talált páros!");
+                        elozo_btn = null;
+                        button.IsEnabled = false;
+                        elozo.IsEnabled = false;
+                        button.Foreground = Brushes.LightGreen;
+                        elozo.Foreground = Brushes.LightGreen;
+                        score++;
+                        tb_Score.Text = "Próbálkozás: " + score;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nem talált páros!");
+                        elozo_btn = null;
+                        button.Content = "?";
+                        elozo.Content = "?";
+                        button.Background = Brushes.LightGray;
+                        elozo.Background = Brushes.LightGray;
+                        score++;
+                        tb_Score.Text = "Próbálkozás: " + score;
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Nem talált páros!");
-                elozo_btn = null;
-                button.Content = "?";
-                elozo.Content = "?";
-                button.Background = Brushes.LightGray;
-                elozo.Background = Brushes.LightGray;
-                score++;
-                tb_Score.Text = "Próbálkozás: " + score;
+                Button button = (Button)sender;
+                if (button.DataContext == null)
+                {
+                    button.Content = button.Name.Split("_")[1];
+                }
+                else
+                {
+                    button.Content = button.DataContext.ToString();
+                }
+                //button.Content = button.Name.Split("_")[1];
+                //button.Content = button.DataContext.ToString();
+                string felirat = button.Content.ToString();
+
+                if (elozo_btn == null)
+                {
+                    elozo_btn = felirat;
+                    elozo = button;
+                    button.Background = Brushes.LightBlue;
+                    elozo.Background = Brushes.LightBlue;
+                }
+                else if (elozo_btn == felirat)
+                {
+                    MessageBox.Show("Talált páros!");
+                    elozo_btn = null;
+                    button.IsEnabled = false;
+                    elozo.IsEnabled = false;
+                    button.Foreground = Brushes.LightGreen;
+                    elozo.Foreground = Brushes.LightGreen;
+                    score++;
+                    tb_Score.Text = "Próbálkozás: " + score;
+                }
+                else
+                {
+                    MessageBox.Show("Nem talált páros!");
+                    elozo_btn = null;
+                    button.Content = "?";
+                    elozo.Content = "?";
+                    button.Background = Brushes.LightGray;
+                    elozo.Background = Brushes.LightGray;
+                    score++;
+                    tb_Score.Text = "Próbálkozás: " + score;
+                }
             }
+            
 
         }
     }
